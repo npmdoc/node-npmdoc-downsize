@@ -61,12 +61,158 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.downsize">module downsize</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.downsize.downsize">
+            function <span class="apidocSignatureSpan"></span>downsize
+            <span class="apidocSignatureSpan">(text, inputOptions, offset)</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.downsize" id="apidoc.module.downsize">module downsize</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.downsize.downsize" id="apidoc.element.downsize.downsize">
+        function <span class="apidocSignatureSpan"></span>downsize
+        <span class="apidocSignatureSpan">(text, inputOptions, offset)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">downsize = function (text, inputOptions, offset) {
+    var stack = [],
+        pointer = 0,
+        tagName = &#x22;&#x22;,
+        parseState = 0,
+        trackedState = {unitCount: 0, countState: false},
+        tagBuffer = &#x22;&#x22;,
+        truncatedText = &#x22;&#x22;;
+
+    var COUNT_CHARACTERS = -1,
+        COUNT_WORDS = -2;
+
+    var options = inputOptions &#x26;&#x26; typeof inputOptions === &#x22;object&#x22; ? inputOptions : {},
+        wordChars = options.wordChars instanceof RegExp ?
+            options.wordChars : new XRegexp(&#x22;[\\p{L}0-9\\-\\&#x27;]&#x22;, &#x22;i&#x22;);
+
+    options.countingType =
+        !isNaN(Number(options.words)) ? COUNT_WORDS : COUNT_CHARACTERS;
+
+    if (options.round) {
+        options.contextualTags = defaultContextualTags;
+    }
+
+    options.keepContext     = !!options.contextualTags;
+    options.contextualTags  =
+        options.keepContext &#x26;&#x26; Array.isArray(options.contextualTags) ?
+            options.contextualTags : [];
+
+    options.limit =
+        (options.countingType === COUNT_WORDS) ?
+            Number(options.words) : Number(options.characters);
+
+    options.limit = isNaN(options.limit) ? Infinity : options.limit;
+
+    function isAtLimit() {
+        var stackIndex = 0;
+
+        // Return true when we&#x27;ve hit our limit
+        if (trackedState.unitCount &#x3c; options.limit) {
+            return false;
+        }
+
+        // If we&#x27;ve got no special context to retain, do an early return.
+        if (!options.keepContext) {
+            return true;
+        }
+
+        for (; stackIndex &#x3c; stack.length; stackIndex++) {
+            if (~options.contextualTags.indexOf(getTagName(stack[stackIndex]))) {
+                return false;
+            }
+        }
+
+        // There are no contextual tags left, we can stop.
+        return true;
+    }
+
+    function count(chr) {
+        // TODO: &#x27;Tock&#x27; for word counting happens when next whitespace is added.
+        //        i.e. it then needs stripping.
+        //        Should a pointer be passed to count instead of the chr?
+        //        This would allow forward lookup and allow &#x27;Tock&#x27; on final char.
+        switch (options.countingType) {
+            case COUNT_WORDS:
+                if (!!wordChars.test(chr + &#x22;&#x22;) !== trackedState.countState) {
+
+                    trackedState.countState = !!wordChars.test(chr + &#x22;&#x22;);
+
+                    // Only count the words on the &#x22;tock&#x22;, or we&#x27;d be counting
+                    // them twice.
+                    if (!trackedState.countState) {
+                        trackedState.unitCount++;
+                    }
+                }
+                break;
+
+            case COUNT_CHARACTERS:
+                // We pass in empty values to count word boundries
+                // defined by tags.
+                // This isn&#x27;t relevant to character truncation.
+                if (chr !== &#x22;&#x22;) {
+                    trackedState.unitCount++;
+                }
+                break;
+        }
+    }
+
+    // Define our parse states
+    var PARSER_UNINITIALISED = 0,
+        PARSER_TAG_COMMENCED = 1,
+        PARSER_TAG_STRING = -1,
+        PARSER_TAG_STRING_SINGLE = -2,
+        PARSER_COMMENT = -3;
+
+    var exit = false;
+    for (; pointer &#x3c; text.length &#x26;&#x26; !exit; pointer++) {
+
+        if (parseState !== PARSER_UNINITIALISED) {
+            tagBuffer += text[pointer];
+        }
+
+        switch (text[pointer]) {
+
+            case &#x22;&#x3c;&#x22;:
+                // Ooh look — we&#x27;re starting a new tag.
+                // (Provided we&#x27;re in uninitialised state and the next
+                // character is a word character, explamation mark or slash)
+
+                if (parseState === PARSER_UNINITIALISED &#x26;&#x26;
+                    text[pointer + 1].match(/[a-z0-9\-\_\/\!]/)) {
+                    if (isAtLimit()) {
+                        exit = true;
+                        break;
+                    }
+                    parseState = PARSER_TAG_COMMENCED;
+                    tagBuffer += text[pointer];
+                }
+
+                break;
+
+            case &#x22;!&#x22;:
+                if (parseState === PARSER_TAG_COMMENCED &#x26;&#x26;
+                    text[pointer - 1] === &#x22;&#x3c;&#x22;) {
+
+                    parseState = PARSE ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 </div>
 

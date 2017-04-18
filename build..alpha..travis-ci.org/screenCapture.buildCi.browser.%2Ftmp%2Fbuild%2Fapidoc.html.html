@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/cgiffard/Downsize"
-
-    >downsize (v0.0.8)</a>
+    <a href="https://github.com/cgiffard/Downsize">downsize (v0.0.8)</a>
 </h1>
 <h4>Tag-safe truncation for HTML and XML. Works by word!</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.downsize">module downsize</a><ol>
 
@@ -88,18 +81,18 @@
     <li>description and source-code<pre class="apidocCodePre">downsize = function (text, inputOptions, offset) {
     var stack = [],
         pointer = 0,
-        tagName = &#x22;&#x22;,
+        tagName = "",
         parseState = 0,
         trackedState = {unitCount: 0, countState: false},
-        tagBuffer = &#x22;&#x22;,
-        truncatedText = &#x22;&#x22;;
+        tagBuffer = "",
+        truncatedText = "";
 
     var COUNT_CHARACTERS = -1,
         COUNT_WORDS = -2;
 
-    var options = inputOptions &#x26;&#x26; typeof inputOptions === &#x22;object&#x22; ? inputOptions : {},
+    var options = inputOptions &amp;&amp; typeof inputOptions === "object" ? inputOptions : {},
         wordChars = options.wordChars instanceof RegExp ?
-            options.wordChars : new XRegexp(&#x22;[\\p{L}0-9\\-\\&#x27;]&#x22;, &#x22;i&#x22;);
+            options.wordChars : new XRegexp("[\\p{L}0-9\\-\\']", "i");
 
     options.countingType =
         !isNaN(Number(options.words)) ? COUNT_WORDS : COUNT_CHARACTERS;
@@ -110,7 +103,7 @@
 
     options.keepContext     = !!options.contextualTags;
     options.contextualTags  =
-        options.keepContext &#x26;&#x26; Array.isArray(options.contextualTags) ?
+        options.keepContext &amp;&amp; Array.isArray(options.contextualTags) ?
             options.contextualTags : [];
 
     options.limit =
@@ -122,17 +115,17 @@
     function isAtLimit() {
         var stackIndex = 0;
 
-        // Return true when we&#x27;ve hit our limit
-        if (trackedState.unitCount &#x3c; options.limit) {
+        // Return true when we've hit our limit
+        if (trackedState.unitCount &lt; options.limit) {
             return false;
         }
 
-        // If we&#x27;ve got no special context to retain, do an early return.
+        // If we've got no special context to retain, do an early return.
         if (!options.keepContext) {
             return true;
         }
 
-        for (; stackIndex &#x3c; stack.length; stackIndex++) {
+        for (; stackIndex &lt; stack.length; stackIndex++) {
             if (~options.contextualTags.indexOf(getTagName(stack[stackIndex]))) {
                 return false;
             }
@@ -143,17 +136,17 @@
     }
 
     function count(chr) {
-        // TODO: &#x27;Tock&#x27; for word counting happens when next whitespace is added.
+        // TODO: 'Tock' for word counting happens when next whitespace is added.
         //        i.e. it then needs stripping.
         //        Should a pointer be passed to count instead of the chr?
-        //        This would allow forward lookup and allow &#x27;Tock&#x27; on final char.
+        //        This would allow forward lookup and allow 'Tock' on final char.
         switch (options.countingType) {
             case COUNT_WORDS:
-                if (!!wordChars.test(chr + &#x22;&#x22;) !== trackedState.countState) {
+                if (!!wordChars.test(chr + "") !== trackedState.countState) {
 
-                    trackedState.countState = !!wordChars.test(chr + &#x22;&#x22;);
+                    trackedState.countState = !!wordChars.test(chr + "");
 
-                    // Only count the words on the &#x22;tock&#x22;, or we&#x27;d be counting
+                    // Only count the words on the "tock", or we'd be counting
                     // them twice.
                     if (!trackedState.countState) {
                         trackedState.unitCount++;
@@ -164,8 +157,8 @@
             case COUNT_CHARACTERS:
                 // We pass in empty values to count word boundries
                 // defined by tags.
-                // This isn&#x27;t relevant to character truncation.
-                if (chr !== &#x22;&#x22;) {
+                // This isn't relevant to character truncation.
+                if (chr !== "") {
                     trackedState.unitCount++;
                 }
                 break;
@@ -180,7 +173,7 @@
         PARSER_COMMENT = -3;
 
     var exit = false;
-    for (; pointer &#x3c; text.length &#x26;&#x26; !exit; pointer++) {
+    for (; pointer &lt; text.length &amp;&amp; !exit; pointer++) {
 
         if (parseState !== PARSER_UNINITIALISED) {
             tagBuffer += text[pointer];
@@ -188,12 +181,12 @@
 
         switch (text[pointer]) {
 
-            case &#x22;&#x3c;&#x22;:
-                // Ooh look — we&#x27;re starting a new tag.
-                // (Provided we&#x27;re in uninitialised state and the next
+            case "&lt;":
+                // Ooh look â€” we're starting a new tag.
+                // (Provided we're in uninitialised state and the next
                 // character is a word character, explamation mark or slash)
 
-                if (parseState === PARSER_UNINITIALISED &#x26;&#x26;
+                if (parseState === PARSER_UNINITIALISED &amp;&amp;
                     text[pointer + 1].match(/[a-z0-9\-\_\/\!]/)) {
                     if (isAtLimit()) {
                         exit = true;
@@ -205,9 +198,9 @@
 
                 break;
 
-            case &#x22;!&#x22;:
-                if (parseState === PARSER_TAG_COMMENCED &#x26;&#x26;
-                    text[pointer - 1] === &#x22;&#x3c;&#x22;) {
+            case "!":
+                if (parseState === PARSER_TAG_COMMENCED &amp;&amp;
+                    text[pointer - 1] === "&lt;") {
 
                     parseState = PARSE ...</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -222,3 +215,4 @@
     ]
 </div>
 </div>
+</body></html>
