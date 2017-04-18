@@ -1,9 +1,14 @@
-# api documentation for  [downsize (v0.0.8)](https://github.com/cgiffard/Downsize)  [![npm package](https://img.shields.io/npm/v/npmdoc-downsize.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-downsize) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-downsize.svg)](https://travis-ci.org/npmdoc/node-npmdoc-downsize)
+# npmdoc-downsize
+
+#### api documentation for  [downsize (v0.0.8)](https://github.com/cgiffard/Downsize)  [![npm package](https://img.shields.io/npm/v/npmdoc-downsize.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-downsize) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-downsize.svg)](https://travis-ci.org/npmdoc/node-npmdoc-downsize)
+
 #### Tag-safe truncation for HTML and XML. Works by word!
 
-[![NPM](https://nodei.co/npm/downsize.png?downloads=true)](https://www.npmjs.com/package/downsize)
+[![NPM](https://nodei.co/npm/downsize.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/downsize)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-downsize/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-downsize_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-downsize/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-downsize/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-downsize/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-downsize/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-downsize/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-downsize/build/screenCapture.npmPackageListing.svg)
 
@@ -52,17 +57,14 @@
     "main": "index.js",
     "maintainers": [
         {
-            "name": "Christopher Giffard",
-            "email": "christopher.giffard@cgiffard.com"
+            "name": "Christopher Giffard"
         },
         {
-            "name": "cgiffard",
-            "email": "christopher.giffard@cgiffard.com"
+            "name": "cgiffard"
         }
     ],
     "name": "downsize",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git://github.com/cgiffard/Downsize.git"
@@ -73,16 +75,6 @@
     "version": "0.0.8"
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module downsize](#apidoc.module.downsize)
-
-
-
-# <a name="apidoc.module.downsize"></a>[module downsize](#apidoc.module.downsize)
 
 
 
