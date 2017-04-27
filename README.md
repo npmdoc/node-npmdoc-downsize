@@ -1,6 +1,6 @@
 # npmdoc-downsize
 
-#### api documentation for  [downsize (v0.0.8)](https://github.com/cgiffard/Downsize)  [![npm package](https://img.shields.io/npm/v/npmdoc-downsize.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-downsize) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-downsize.svg)](https://travis-ci.org/npmdoc/node-npmdoc-downsize)
+#### basic api documentation for  [downsize (v0.0.8)](https://github.com/cgiffard/Downsize)  [![npm package](https://img.shields.io/npm/v/npmdoc-downsize.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-downsize) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-downsize.svg)](https://travis-ci.org/npmdoc/node-npmdoc-downsize)
 
 #### Tag-safe truncation for HTML and XML. Works by word!
 
@@ -72,7 +72,8 @@
     "scripts": {
         "test": "mocha -R spec test.js"
     },
-    "version": "0.0.8"
+    "version": "0.0.8",
+    "bin": {}
 }
 ```
 
